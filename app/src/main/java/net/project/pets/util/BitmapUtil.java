@@ -7,7 +7,7 @@ public class BitmapUtil {
      * reduces the size of the image
      * @param image
      * @param maxSize
-     * @return
+     * @return scaledBitmap
      */
     public static Bitmap getResizedBitmap(Bitmap image, int maxSize) {
         int width = image.getWidth();
@@ -26,9 +26,8 @@ public class BitmapUtil {
 
 
     /**
-     *
      * @param srcBmp
-     * @return
+     * @return dstBmp
      */
 
     public static Bitmap makeThumbnail(Bitmap srcBmp) {

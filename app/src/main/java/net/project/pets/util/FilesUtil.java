@@ -1,7 +1,6 @@
 package net.project.pets.util;
 
 import android.content.Context;
-import android.os.Environment;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;

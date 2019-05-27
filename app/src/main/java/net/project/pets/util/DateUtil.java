@@ -3,24 +3,26 @@ import java.util.Calendar;
 
 public class DateUtil {
 
-    public static final int SUNDAY_INDEX = 0;
-    public static final int MONDAY_INDEX = 1;
-    public static final int TUESDAY_INDEX = 2;
-    public static final int WEDNESDAY_INDEX = 3;
-    public static final int THURSDAY_INDEX = 4;
-    public static final int FRIDAY_INDEX = 5;
-    public static final int SATURDAY_INDEX = 6;
+    private static final int SUNDAY_INDEX = 0;
+    private static final int MONDAY_INDEX = 1;
+    private static final int TUESDAY_INDEX = 2;
+    private static final int WEDNESDAY_INDEX = 3;
+    private static final int THURSDAY_INDEX = 4;
+    private static final int FRIDAY_INDEX = 5;
+    private static final int SATURDAY_INDEX = 6;
 
-    public static final String SUNDAY_IDENTIFIER = "Su";
-    public static final String MONDAY_IDENTIFIER = "M";
-    public static final String TUESDAY_IDENTIFIER = "Tu";
-    public static final String WEDNESDAY_IDENTIFIER = "W";
-    public static final String THURSDAY_IDENTIFIER = "Th";
-    public static final String FRIDAY_IDENTIFIER = "F";
-    public static final String SATURDAY_IDENTIFIER = "Sa";
+    private static final String SUNDAY_IDENTIFIER = "Su";
+    private static final String MONDAY_IDENTIFIER = "M";
+    private static final String TUESDAY_IDENTIFIER = "Tu";
+    private static final String WEDNESDAY_IDENTIFIER = "W";
+    private static final String THURSDAY_IDENTIFIER = "Th";
+    private static final String FRIDAY_IDENTIFIER = "F";
+    private static final String SATURDAY_IDENTIFIER = "Sa";
 
-    public static final String[] daysArray = {SUNDAY_IDENTIFIER, MONDAY_IDENTIFIER, TUESDAY_IDENTIFIER,
-            WEDNESDAY_IDENTIFIER, THURSDAY_IDENTIFIER, FRIDAY_IDENTIFIER, SATURDAY_IDENTIFIER};
+    /**
+     * check if current time fits store working hours
+     * @param workingHours
+     */
 
     public static boolean canContactStoreNow(String workingHours) throws IllegalArgumentException {
 
@@ -152,7 +154,12 @@ public class DateUtil {
         }
     }
 
-    public static int getWeekDayNumericValue(String limitStr) {
+    /**
+     * get numeric value of week day string
+     * @param limitStr
+     */
+
+    static int getWeekDayNumericValue(String limitStr) {
         int result = -1;
 
         if (limitStr.equals(SUNDAY_IDENTIFIER)) {
@@ -186,7 +193,14 @@ public class DateUtil {
         return result;
     }
 
-    public static boolean fitsHourRange(String lowerRange, String higherRange, String currentTime) {
+    /**
+     * check if current time (hh:mm) fits working hours of store
+     * @param lowerRange
+     * @param higherRange
+     * @param currentTime
+     */
+
+    static boolean fitsHourRange(String lowerRange, String higherRange, String currentTime) {
 
         boolean result;
 

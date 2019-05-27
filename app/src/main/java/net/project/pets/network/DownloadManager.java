@@ -1,15 +1,11 @@
 package net.project.pets.network;
 
 import android.content.Context;
-import android.os.Environment;
-
 import net.project.pets.util.BroadcastSender;
 import net.project.pets.util.Constants;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -29,7 +25,7 @@ public class DownloadManager {
                     BroadcastSender.showNetworkErrorUI(context);
                 }
             }
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Call call, Response response) {
                 if (!response.isSuccessful()) {
                     if (requestType == Constants
                             .REQUEST_TYPE_DOWNLOAD_DATA) {

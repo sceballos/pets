@@ -6,6 +6,13 @@ import android.content.DialogInterface;
 
 public class MessageDialog {
 
+    /**
+     * shows dialog with closing app feature
+     * @param context
+     * @param message
+     * @param closeApp
+     */
+
     public static void showDialog(final Context context, String message, final boolean closeApp) {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
         builder1.setMessage(message);
