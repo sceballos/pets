@@ -1,7 +1,7 @@
 {
   "settings": {
-    "isChatEnabled": false,
-    "isCallEnabled": false,
+    "isChatEnabled": true,
+    "isCallEnabled": true,
     "workHours": "M-F 9:00 - 18:00"
   }
 }

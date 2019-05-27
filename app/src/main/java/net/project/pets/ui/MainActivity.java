@@ -1,9 +1,5 @@
 package net.project.pets.ui;
 
-/*
-  TODO : resolve web hosting for config files
-* */
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -122,13 +118,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String workingHours = storeConfig.getWorkingHours();
         String message = "";
 
-        if (DateUtil.canContactStoreNow(workingHours)) {
-            message = "Thank you for getting in touch with us. We’ll get back to you as soon as possible";
-        } else {
-            message = "Work hours has ended. Please contact us again on the next work day";
+        try {
+
+            if (DateUtil.canContactStoreNow(workingHours)) {
+                message = "Thank you for getting in touch with us. We’ll get back to you as soon as possible";
+            } else {
+                message = "Work hours has ended. Please contact us again on the next work day";
+            }
+
+        } catch (IllegalArgumentException e) {
+            message = "Could't read working hours";
         }
 
         MessageDialog.showDialog(MainActivity.this, message, false);
+
     }
 
     /**
@@ -190,6 +193,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     void readConfigJson() {
         String configDataRaw = FilesUtil.readJsonData(MainActivity.this, Constants.CONFIG_FILE_NAME);
+        //String configDataRaw = FilesUtil.readFileFromRawDirectory(MainActivity.this, R.raw.config);
         storeConfig = JsonFormatter.getDataFromConfigJson(configDataRaw);
         updateContactInfo();
     }
@@ -200,6 +204,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     void readPetJson() {
         String petsDataRaw = FilesUtil.readJsonData(MainActivity.this, Constants.DATA_FILE_NAME);
+        //String petsDataRaw = FilesUtil.readFileFromRawDirectory(MainActivity.this, R.raw.data);
         pets = JsonFormatter.getDataFromPetsJson(petsDataRaw);
     }
 

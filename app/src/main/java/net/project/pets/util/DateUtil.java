@@ -1,12 +1,11 @@
 package net.project.pets.util;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalTime;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DateUtil {
+
+    public static final int daysOfWeek = 6;
 
     public static final int SUNDAY_INDEX = 0;
     public static final int MONDAY_INDEX = 1;
@@ -24,13 +23,49 @@ public class DateUtil {
     public static final String FRIDAY_IDENTIFIER = "F";
     public static final String SATURDAY_IDENTIFIER = "Sa";
 
-    public static boolean canContactStoreNow(String workingHours) {
+    public static final String[] daysArray = {SUNDAY_IDENTIFIER, MONDAY_IDENTIFIER, TUESDAY_IDENTIFIER,
+            WEDNESDAY_IDENTIFIER, THURSDAY_IDENTIFIER, FRIDAY_IDENTIFIER, SATURDAY_IDENTIFIER};
+
+    static String excludedDay = "";
+
+    public static boolean canContactStoreNow(String workingHours) throws IllegalArgumentException {
 
         String noSpacesHours = workingHours.replaceAll("\\s+","");
 
-        String daysRange = noSpacesHours.substring(0, 3);
-        String openingTime = noSpacesHours.substring(3, 7);
-        String closingTime = noSpacesHours.substring(8);
+        int indexOfNum = 0;
+
+        // Skip past non-digits.
+        while (indexOfNum < noSpacesHours.length() && !Character.isDigit(noSpacesHours.charAt(indexOfNum))) {
+            ++indexOfNum;
+        }
+
+        String daysRange = noSpacesHours.substring(0, indexOfNum);
+
+        String [] arrayOfDaysRange = daysRange.split("-");
+
+        String lowerLimitStr = "";
+        String higherLimitStr = "";
+
+        try {
+            lowerLimitStr = arrayOfDaysRange[0];
+            higherLimitStr = arrayOfDaysRange[1];
+        } catch (IndexOutOfBoundsException e) {
+            throw new IllegalArgumentException();
+        }
+
+        String hoursString = noSpacesHours.substring(indexOfNum);
+
+        String [] arrayOfTimeRange = hoursString.split("-");
+
+        String openingTime = "";
+        String closingTime = "";
+
+        try {
+            openingTime = arrayOfTimeRange[0];
+            closingTime = arrayOfTimeRange[1];
+        } catch (IndexOutOfBoundsException e) {
+            throw new IllegalArgumentException();
+        }
 
         //check if times have all digits
         if (openingTime.length() < 5) {
@@ -40,9 +75,6 @@ public class DateUtil {
         if (closingTime.length() < 5) {
             closingTime = "0" + openingTime;
         }
-
-        String lowerLimitStr = daysRange.substring(0,1);
-        String higherLimitStr = daysRange.substring(2,3);
 
         int currentDay = -1;
         int lowerLimit;
@@ -79,6 +111,10 @@ public class DateUtil {
         higherLimit = getWeekDayNumericValue(higherLimitStr);
 
         //check if -1, return error message of bad formatting
+
+        if (lowerLimit == -1 || higherLimit == -1) {
+            throw new IllegalArgumentException("Working hours contains wrong values");
+        }
 
         int hourOfDay = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         int minutes = Calendar.getInstance().get(Calendar.MINUTE);
@@ -164,9 +200,6 @@ public class DateUtil {
 
         boolean result;
 
-        lowerRange = "09:30";
-        higherRange = "18:30";
-
         int lowerRangeHour = Integer.valueOf(lowerRange.substring(0,2));
         int lowerRangeMinute = Integer.valueOf(lowerRange.substring(3));
 
@@ -189,6 +222,28 @@ public class DateUtil {
         }
 
         return result;
+    }
+
+    public static int getIndexOfDay(String workingHours, String exclude) {
+
+        int indexFound = -1;
+
+        for (int i = 0; i < daysArray.length;i++) {
+
+            String day = daysArray[i];
+
+            if (day.equals(excludedDay)) {
+                continue;
+            }
+
+            indexFound = workingHours.indexOf(day);
+            if (indexFound != -1) {
+                excludedDay = day;
+                break;
+            }
+        }
+
+        return indexFound;
     }
 
 }
