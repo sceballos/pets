@@ -1,11 +1,7 @@
 package net.project.pets.util;
 import java.util.Calendar;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class DateUtil {
-
-    public static final int daysOfWeek = 6;
 
     public static final int SUNDAY_INDEX = 0;
     public static final int MONDAY_INDEX = 1;
@@ -25,8 +21,6 @@ public class DateUtil {
 
     public static final String[] daysArray = {SUNDAY_IDENTIFIER, MONDAY_IDENTIFIER, TUESDAY_IDENTIFIER,
             WEDNESDAY_IDENTIFIER, THURSDAY_IDENTIFIER, FRIDAY_IDENTIFIER, SATURDAY_IDENTIFIER};
-
-    static String excludedDay = "";
 
     public static boolean canContactStoreNow(String workingHours) throws IllegalArgumentException {
 
@@ -143,8 +137,6 @@ public class DateUtil {
                 //check times
                 return fitsHourRange(openingTime, closingTime, timeOfDayString);
             } else {
-                //no within range
-
                 return false;
             }
 
@@ -155,8 +147,6 @@ public class DateUtil {
                 //check times
                 return fitsHourRange(openingTime, closingTime, timeOfDayString);
             } else {
-                //no within range
-                //check times
                 return false;
             }
         }
@@ -222,28 +212,6 @@ public class DateUtil {
         }
 
         return result;
-    }
-
-    public static int getIndexOfDay(String workingHours, String exclude) {
-
-        int indexFound = -1;
-
-        for (int i = 0; i < daysArray.length;i++) {
-
-            String day = daysArray[i];
-
-            if (day.equals(excludedDay)) {
-                continue;
-            }
-
-            indexFound = workingHours.indexOf(day);
-            if (indexFound != -1) {
-                excludedDay = day;
-                break;
-            }
-        }
-
-        return indexFound;
     }
 
 }
